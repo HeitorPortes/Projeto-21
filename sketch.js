@@ -8,7 +8,7 @@ var ground, groundGif;
 var nuvemGroup, nuvemGif;
 var obstaculosGroup, carcara, coruja, bemTV;
 
-var invesibleBlock;
+var invisibleBlock;
 
 var score;
 
@@ -16,7 +16,7 @@ var restartGif, gameOverGif;
 
 function preload(){
     tucano_voando = loadImage("tucano1.gif");
-    tucano_space = loadImage("tucano2.gif");
+    tucano_space = loadAnimation("tucano2.gif");
     tucano_collided = loadImage("tucano3.gif");
 
     groundGif = loadImage("Ground.gif");
@@ -40,13 +40,13 @@ function setup() {
   ground.x = ground.width /2;
   ground.scale=1000000000000;
     
-    tucano = createSprite(50,100,20,50);
-    tucano.addImage(tucano_voando);
+    tucano = createSprite(50,100,20,20);
+    tucano.addImage("voando",tucano_voando);
     
     tucano.scale = 4;
 
-    invesibleBlock=createSprite(300,1,1000,10);
-    invesibleBlock.visible = false;
+    invisibleBlock=createSprite(300,200,1000,10);
+    invisibleBlock.visible = false;
 
    
 
@@ -69,7 +69,7 @@ function setup() {
 }
 
 function draw() {
-    background(180);
+    background("lightblue");
   
   text("Score: "+ score, 500,50);
   
@@ -92,7 +92,7 @@ function draw() {
     
     if(keyWentDown("space")&& tucano.y >= 100) {
         tucano.velocityY = -12;
-        tucano.addImage("space",tucano_space);
+        tucano.addAnimation("space",tucano_space);
     }
 
     if(keyWentUp("space")){
@@ -107,6 +107,10 @@ function draw() {
     
     if(obstaclesGroup.isTouching(tucano)){
         gameState = END;
+    }
+
+    if(invisibleBlock.isTouching(tucano)){
+      gameState = END;
     }
   
   }
